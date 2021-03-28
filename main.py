@@ -11,6 +11,13 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    fruits = ["banana", "apple", "pineapple"]
+    for i in fruits:
+        #print_hi('PyCharm')
+        if i == "banana":
+            n = 0
+            while n != 5:
+                print_hi(i)
+                n += 1
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
