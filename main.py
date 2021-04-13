@@ -1,15 +1,26 @@
 import functions
 import taster
-import luefter
+# import luefter
 import time
-import rgb
+# import rgb
+import servo
+
 
 if __name__ == '__main__':
 
+    p = servo.config()
+
+try:
     while True:
-        rgb.red()
-        time.sleep(2)
-        rgb.yellow()
-        time.sleep(2)
-        rgb.green()
-        time.sleep(2)
+        #p.ChangeDutyCycle(7.5)
+        #"""
+        servo.min(p)
+        time.sleep(5)
+        #servo.mid(p)
+        #time.sleep(5)
+        servo.max(p)
+        time.sleep(5)
+       # """
+except KeyboardInterrupt:
+        p.stop()
+
