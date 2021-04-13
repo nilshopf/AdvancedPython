@@ -2,12 +2,14 @@ import functions
 import taster
 import luefter
 import time
+import rgb
 
 if __name__ == '__main__':
-    luefter.config()
 
     while True:
-        luefter.on()
-        time.sleep(10)
-        luefter.off()
-        time.sleep(10)
+        rgb.red()
+        time.sleep(2)
+        rgb.yellow()
+        time.sleep(2)
+        rgb.green()
+        time.sleep(2)
