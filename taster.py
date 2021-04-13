@@ -1,10 +1,12 @@
-from gpiozero import LED
+from gpiozero import LED, Button
 from time import sleep
 
-led = LED(17)
-
 def blinkt():
+    led = LED(17)
     led.on()
-    sleep(1)
-    led.off
-    sleep(1)
+    sleep(0.1)
+    led.off()
+    sleep(0.1)
+
+def button():
+    button = Button(2)
