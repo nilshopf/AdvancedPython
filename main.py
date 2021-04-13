@@ -11,12 +11,10 @@ def print_hi(name):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
 
-    GPIO.LED_init()
+    GPIO.GPIO_init()
 
     while 1:
-        GPIO.LED_ON()
-        time.sleep(1.5)
-        GPIO.LED_OFF()
-        time.sleep(1.5)
+
+        time.sleep(1)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
