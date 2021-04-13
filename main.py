@@ -1,14 +1,28 @@
 import functions
 import taster
-from gpiozero import LED, Butto
+from gpiozero import RGBLED
+from time import sleep
 
-button = Button(2)
+led = RGBLED(red=17, green=27, blue=22)
 
 if __name__ == '__main__':
 
     while True:
-        button.wait_for_press()
-        print("Button pushed")
-        led.on()
-        button.wait_for_release()
-        led.off()
+        led.red = 1  # full red
+        sleep(1)
+        led.red = 0.5  # half red
+        sleep(1)
+
+        led.color = (0, 1, 0)  # full green
+        sleep(1)
+        led.color = (1, 0, 1)  # magenta
+        sleep(1)
+        led.color = (1, 1, 0)  # yellow
+        sleep(1)
+        led.color = (0, 1, 1)  # cyan
+        sleep(1)
+        led.color = (1, 1, 1)  # white
+        sleep(1)
+
+        led.color = (0, 0, 0)  # off
+        sleep(1)
