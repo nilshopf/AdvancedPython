@@ -5,9 +5,17 @@ import time
 # import rgb
 import servo
 import kamera
+import bme680
 
 
 if __name__ == '__main__':
-    camera = kamera.config()
+    #camera = kamera.config()
     #while True:
-    kamera.picture(camera)
+    #kamera.picture(camera)
+
+    gas, humidity, pressure, temperature = bme680.get_data()
+    print(gas)
+    print(humidity)
+    print(pressure)
+    print(temperature)
+
