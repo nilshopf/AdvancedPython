@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start</title>
+</head>
+<body>
+    <h1>Temperatur: {{temperature}}</h1>
+<br>
+    <h1>Gas: {{gas}}</h1>
+<br>
+    <h1>Druck: {{pressure}}</h1>
+<br>
+    <h1>Luftfeuchtigkeit: {{humidity}}</h1>
+<br>
+    <img src="{{ url_for('static', filename='latest.jpg') }}">
+</body>
+</html>

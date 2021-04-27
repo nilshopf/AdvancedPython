@@ -6,6 +6,7 @@ import time
 import servo
 import kamera
 import bme680
+import pcf8591
 
 
 if __name__ == '__main__':
@@ -13,9 +14,14 @@ if __name__ == '__main__':
     #while True:
     #kamera.picture(camera)
 
-    gas, humidity, pressure, temperature = bme680.get_data()
-    print(gas)
-    print(humidity)
-    print(pressure)
-    print(temperature)
 
+    #gas, humidity, pressure, temperature = bme680.get_data()
+    #print(gas)
+    #print(humidity)
+    #print(pressure)
+    #print(temperature)
+
+    for i in range(5):
+        wert = pcf8591.get_data()
+        print(wert)
+        time.sleep(3)
