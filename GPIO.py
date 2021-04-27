@@ -1,40 +1,35 @@
 import RPi.GPIO as GPIO
+import servo
+import fan
 
-Counter = 0
-status = 0
 
-#LED's initialisieren
-def GPIO_init():
+#GPIO Pin
+button = 25
+state = 0
+
+
+#Pumpe initialisieren
+def config():
     GPIO.setmode(GPIO.BCM)  #GPIO Nummern ansprechen
     GPIO.setwarnings(False)
 
-    #LED initialisieren
-    GPIO.setup(21, GPIO.OUT)
-
     #Taster initialisieren
-    GPIO.setup(24, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-    GPIO.add_event_detect(24, GPIO.RISING, callback=Interrupt, bouncetime = 200)
+    GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    GPIO.add_event_detect(button, GPIO.RISING, callback=fan_Interrupt, bouncetime = 200)
 
-def LED_ON():
-    GPIO.output(21, GPIO.HIGH)
 
-def LED_OFF():
-    GPIO.output(21, GPIO.LOW)
 
-def Interrupt(Channel):
-    global Counter
-    global status
-    Counter = Counter + 1
-    print ("Counter " + str(Counter))
+def fan_Interrupt(Channel):
 
-    if status == 0:
-        LED_ON()
-        status = 1
+    global state
+
+    if state == 0:
+        servo.switch_on()
+        fan.switch_on()
+        state = 1
     else:
-        LED_OFF()
-        status = 0
-
-
-
+        servo.switch_off()
+        fan.switch_off()
+        state = 0
 
 

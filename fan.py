@@ -1,6 +1,7 @@
 import RPi.GPIO as gp
 
-pin = 17
+#GPIO Pin
+pin = 12
 
 def config():
     gp.setwarnings(False)
@@ -8,9 +9,9 @@ def config():
     gp.setup(pin, gp.OUT)
 
 
-def on():
+def switch_on():
     gp.output(pin, gp.HIGH)
 
 
-def off():
+def switch_off():
     gp.output(pin, gp.LOW)

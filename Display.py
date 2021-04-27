@@ -2,25 +2,44 @@ import struct
 import time
 import serial
 from binascii import unhexlify
+import RPi.GPIO as GPIO
+
+button = 13
+display = 18
+state = 0;
+
+def config():
+   # ser = serial.Serial("/dev/serial0", 9600)  # Open port with baud rate
+
+    GPIO.setmode(GPIO.BCM)  #GPIO Nummern ansprechen
+    GPIO.setwarnings(False)
+
+    # Display aktivieren
+    GPIO.setup(display, GPIO.OUT)
+
+    # Taster initialisieren
+    GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
+    GPIO.add_event_detect(button, GPIO.RISING, callback=display_Interrupt, bouncetime = 200)
 
 
-def UART_init():
-    ser = serial.Serial("/dev/serial0", 9600)  # Open port with baud rate
+def set_data(gas, humidity, pressure, temperature):
+    global state
+
+    if state == 1:
+
+        #Bodenfeuchtigkeit
+        send_data(txtfeld="t2.txt=", msg= str(gas) + "%")
+        #Temperatur
+        send_data(txtfeld="t6.txt=", msg=str(humidity))
+        # Druck
+        send_data(txtfeld="t8.txt=", msg=str(pressure) + "hPa")
+        #Luftfeuchtigkeit
+        send_data(txtfeld="t4.txt=", msg=str(temperature) + "%")
 
 
-def Sensor_Data():
-    var = 70
-    #Bodenfeuchtigkeit
-    UART_sendData(txtfeld="t2.txt=", msg= str(var) + "%")
-    #Temperatur
-    UART_sendData(txtfeld="t6.txt=", msg=str(var))
-    # Druck
-    UART_sendData(txtfeld="t8.txt=", msg=str(var) + "hPa")
-    #Luftfeuchtigkeit
-    UART_sendData(txtfeld="t4.txt=", msg=str(var) + "%")
 
 
-def UART_sendData(txtfeld, msg):
+def send_data(txtfeld, msg):
     ser = serial.Serial("/dev/serial0", 9600)  # Open port with baud rate
 
     my_string = 'FF'
@@ -35,3 +54,14 @@ def UART_sendData(txtfeld, msg):
     ser.write(unhexlify(my_string))
     ser.write(unhexlify(my_string))
 
+def display_Interrupt(Channel):
+
+    global state
+
+    print("Hallo")
+    if state == 0:
+        GPIO.output(display, GPIO.HIGH)
+        state = 1
+    else:
+        GPIO.output(display, GPIO.LOW)
+        state = 0
