@@ -4,9 +4,8 @@ import serial
 from binascii import unhexlify
 import RPi.GPIO as GPIO
 
-button = 13
-display = 18
-state = 0;
+button = 19
+state = 0
 
 def config():
    # ser = serial.Serial("/dev/serial0", 9600)  # Open port with baud rate
@@ -14,27 +13,28 @@ def config():
     GPIO.setmode(GPIO.BCM)  #GPIO Nummern ansprechen
     GPIO.setwarnings(False)
 
-    # Display aktivieren
-    GPIO.setup(display, GPIO.OUT)
-
     # Taster initialisieren
     GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
-    GPIO.add_event_detect(button, GPIO.RISING, callback=display_Interrupt, bouncetime = 200)
-
+    GPIO.add_event_detect(button, GPIO.BOTH, callback=display_Interrupt, bouncetime = 200)
 
 def set_data(gas, humidity, pressure, temperature):
     global state
 
     if state == 1:
+        exit(1)
+        time_reference = time.localtime()
+        time_reference = ((int(time_reference.tm_sec)) + 10) % 60
 
-        #Bodenfeuchtigkeit
-        send_data(txtfeld="t2.txt=", msg= str(gas) + "%")
-        #Temperatur
-        send_data(txtfeld="t6.txt=", msg=str(humidity))
-        # Druck
-        send_data(txtfeld="t8.txt=", msg=str(pressure) + "hPa")
-        #Luftfeuchtigkeit
-        send_data(txtfeld="t4.txt=", msg=str(temperature) + "%")
+        while time.localtime()[5] != time_reference:
+            #Bodenfeuchtigkeit
+            send_data(txtfeld="t2.txt=", msg= str(gas) + "%")
+            #Temperatur
+            send_data(txtfeld="t6.txt=", msg=str(humidity))
+            # Druck
+            send_data(txtfeld="t8.txt=", msg=str(pressure) + "hPa")
+            #Luftfeuchtigkeit
+            send_data(txtfeld="t4.txt=", msg=str(temperature) + "%")
+
 
 
 
@@ -57,11 +57,8 @@ def send_data(txtfeld, msg):
 def display_Interrupt(Channel):
 
     global state
-
-    print("Hallo")
+    print("INTERRUPT !!!!!!!!!!!!!!!!!!!")
     if state == 0:
-        GPIO.output(display, GPIO.HIGH)
         state = 1
     else:
-        GPIO.output(display, GPIO.LOW)
         state = 0

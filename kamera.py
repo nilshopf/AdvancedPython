@@ -6,7 +6,7 @@ import os
 import shutil
 
 def config():
-    camera = PiCamera()
+
     return camera
 
 def preview(camera):
@@ -14,7 +14,8 @@ def preview(camera):
     sleep(5)
     camera.stop_preview()
 
-def picture(camera):
+def picture():
+    camera = PiCamera()
     a = datetime.now()
     time = str(a.hour)+":"+str(a.minute)+":"+str(a.second)
     date = str(a.year)+"-"+str(a.month)+"-"+str(a.day)

@@ -11,6 +11,7 @@ def config():
 
     # Pumpe initialisieren
     GPIO.setup(pumpe, GPIO.OUT)
+    switch_off()
 
 
 def switch_on():

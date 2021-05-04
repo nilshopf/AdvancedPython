@@ -17,10 +17,12 @@ import Display
 import time
 
 # Vergleichswerte
-soil_moisture_check =  0       #Vergleichswert Bodenfeuchtigkeit
-temperature_check = 22         #Vergleichswert Temperatur in °C
-humidity_check = 50            #Vergleichswert Feuchtigkeit in %
+soil_moisture_check = 50       #Vergleichswert Bodenfeuchtigkeit in %
+temperature_check = 24         #Vergleichswert Temperatur in °C
+humidity_check = 60            #Vergleichswert Luftfeuchtigkeit in %
 irrigation_time = 15           #Bewässerungs Zeit in sek
+
+ventilation_check = 0
 
 
 # Press the green button in the gutter to run the script.
@@ -30,7 +32,8 @@ if __name__ == '__main__':
     fan.config()
     GPIO.config()
     pump.config()
-    kamera.config()
+    #kamera.config()
+    Display.config()
 
     while True :
 
@@ -38,11 +41,16 @@ if __name__ == '__main__':
         gas, humidity, pressure, temperature = bme680.get_data()
         soil_moisture = pcf8591.get_data()
 
+        print("\n\ngas:", gas, "\nLuftfeuchtigkeit:", humidity, "\nTemperatur:", temperature, "\nBodenfeuchtigkeit:", soil_moisture)
+
         Display.set_data(soil_moisture, temperature, pressure, humidity)
 
+        # stündliche Fotoaufnahme
+        if time.localtime()[4] % 60 == 0:
+            kamera.picture()
 
         # Bodenfeuchtigkeit prüfen
-        if soil_moisture <= soil_moisture_check :
+        if soil_moisture <= soil_moisture_check:
             pump.switch_on()
             time.sleep(irrigation_time)
             pump.switch_off()
@@ -52,12 +60,15 @@ if __name__ == '__main__':
             servo.switch_on()
             fan.switch_on()
             rgb.red()
-        else:
+            ventilation_check = 1
+
+        elif ventilation_check == 1:
             servo.switch_off()
             fan.switch_off()
             rgb.green()
 
-        time.sleep(60)
+
+
 
 
 

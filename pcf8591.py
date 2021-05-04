@@ -2,7 +2,7 @@ import smbus
 import time
 
 address = 0x48
-A0 = 0x40
+A2 = 0x42
 """
 A1 = 0x41
 A2 = 0x42
@@ -20,7 +20,9 @@ while True:
 
 
 def get_data():
+
     bus = smbus.SMBus(1)
+    bus.write_byte(address, A2)
     for i in range(5):
         value = bus.read_byte(address)
         time.sleep(0.5)
