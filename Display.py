@@ -21,7 +21,6 @@ def set_data(gas, humidity, pressure, temperature):
     global state
 
     if state == 1:
-        exit(1)
         time_reference = time.localtime()
         time_reference = ((int(time_reference.tm_sec)) + 10) % 60
 
@@ -34,9 +33,6 @@ def set_data(gas, humidity, pressure, temperature):
             send_data(txtfeld="t8.txt=", msg=str(pressure) + "hPa")
             #Luftfeuchtigkeit
             send_data(txtfeld="t4.txt=", msg=str(temperature) + "%")
-
-
-
 
 
 def send_data(txtfeld, msg):

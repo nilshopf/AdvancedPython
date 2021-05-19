@@ -7,6 +7,7 @@ def config():
     gp.setwarnings(False)
     gp.setmode(gp.BCM)
     gp.setup(pin, gp.OUT)
+    gp.output(pin, gp.LOW)
 
 
 def switch_on():

@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 
 # GPIO Pin
-pumpe = 5
+pumpe = 6
 
 
 # Pumpe initialisieren

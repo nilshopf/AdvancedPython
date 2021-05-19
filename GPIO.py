@@ -25,12 +25,12 @@ def fan_Interrupt(Channel):
 
     if state == 0:
         print("Lüfter ON")
-        servo.switch_on()
+       # servo.switch_on()
         fan.switch_on()
         state = 1
     else:
         print("Lüfter OFF")
-        servo.switch_off()
+        #servo.switch_off()
         fan.switch_off()
         state = 0
 
