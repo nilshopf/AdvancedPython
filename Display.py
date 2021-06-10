@@ -1,16 +1,35 @@
-import struct
+"""
+ * ---------------------------------------------------------------------------------------------------------
+ *		Version		:		1.0
+ * ---------------------------------------------------------------------------------------------------------
+ *
+ *		Nutzen		:		Modul zum Arbeiten mit dem Nextion Display (NX3224T024)
+ *
+ *		Modul		:		Advanced Python
+ *
+ *		Autor		:		Merit Tienken
+ *
+ *		Sprache		:		Python
+ *
+ *
+ *
+ *	Date			Time	Name		Log		Modification
+ *----------------------------------------------------------------------------------------------------------
+ *
+ *
+ """
+
 import time
 import serial
 from binascii import unhexlify
 import RPi.GPIO as GPIO
 
-button = 19
-state = 0
+button = 25     # Pin vom Taster
+state = 0       # Prueft, ob das Display aktiv oder inaktiv ist
+
 
 def config():
-   # ser = serial.Serial("/dev/serial0", 9600)  # Open port with baud rate
-
-    GPIO.setmode(GPIO.BCM)  #GPIO Nummern ansprechen
+    GPIO.setmode(GPIO.BCM)  # GPIO Pin-Nummern ansprechen
     GPIO.setwarnings(False)
 
     # Taster initialisieren
@@ -53,8 +72,9 @@ def send_data(txtfeld, msg):
 def display_Interrupt(Channel):
 
     global state
-    print("INTERRUPT !!!!!!!!!!!!!!!!!!!")
+
     if state == 0:
         state = 1
     else:
         state = 0
+    # print("INTERRUPT Display!")

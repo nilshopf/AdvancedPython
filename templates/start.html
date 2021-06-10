@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Start</title>
+    <title>Gewächshaus-Infos</title>
 </head>
 <body>
-    <h1>Temperatur: {{temperature}}</h1>
+
+    <h1>Bodenfeuchtigkeit: {{soil_moisture}} %</h1>
 <br>
-    <h1>Gas: {{gas}}</h1>
+    <h1>Luftfeuchtigkeit: {{humidity}} %</h1>
 <br>
-    <h1>Druck: {{pressure}}</h1>
+     <h1>Temperatur: {{temperature}} °C</h1>
 <br>
-    <h1>Luftfeuchtigkeit: {{humidity}}</h1>
+    <h1>Druck: {{pressure}} hPa</h1>
 <br>
     <img src="{{ url_for('static', filename='latest.jpg') }}">
 </body>
