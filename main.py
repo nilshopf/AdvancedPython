@@ -26,7 +26,7 @@ import time
 import threading
 
 # Importieren eigener Module
-import GPIO
+import gpio
 import fan
 import rgb
 import pump
@@ -34,6 +34,7 @@ import bme680
 import pcf8591
 import camera
 import Display
+
 
 # Startwerte fuer die Sensordaten
 humidity = 0
@@ -80,7 +81,7 @@ if __name__ == '__main__':
     # Module initialisieren
     rgb.green()
     fan.config()
-    GPIO.config()
+    gpio.config()
     pump.config()
     camera = camera.config()
     Display.config()
