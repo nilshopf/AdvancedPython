@@ -32,43 +32,47 @@ def config():
     GPIO.setmode(GPIO.BCM)  # GPIO Pin-Nummern ansprechen
     GPIO.setwarnings(False)
 
-    # Taster initialisieren
+    # Schalter fuer das Display initialisieren
     GPIO.setup(button, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
     GPIO.add_event_detect(button, GPIO.BOTH, callback=display_Interrupt, bouncetime = 200)
 
-def set_data(gas, humidity, pressure, temperature):
+
+# Sensordaten fuer das Display vorbereiten und uebermitteln
+def set_data(soil_moisture, humidity, pressure, temperature):
     global state
 
+    # wenn das Display aktiv ist, werden die Sensor Daten 10sek aktiv gesendet
     if state == 1:
-        time_reference = time.localtime()
-        time_reference = ((int(time_reference.tm_sec)) + 10) % 60
+        time_reference = time.localtime()   # aktuelle Uhrzeit
+        time_reference = ((int(time_reference.tm_sec)) + 10) % 60   # aktuelle Sekunden + 10s
 
-        while time.localtime()[5] != time_reference:
-            #Bodenfeuchtigkeit
-            send_data(txtfeld="t2.txt=", msg= str(gas) + "%")
-            #Temperatur
-            send_data(txtfeld="t6.txt=", msg=str(humidity))
+        while time.localtime()[5] != time_reference:        # localtime()[5] == aktuelle sekunde
+            # Sensordaten an das Display senden (gewuenschtes Textfeld auf dem Display + Uebermittelter text)
+            # Bodenfeuchtigkeit
+            send_data(txt_field="t2.txt=", msg= str(soil_moisture) + "%")
+            # Luftfeuchtigkeit
+            send_data(txt_field="t4.txt=", msg=str(humidity) + "%")
             # Druck
-            send_data(txtfeld="t8.txt=", msg=str(pressure) + "hPa")
-            #Luftfeuchtigkeit
-            send_data(txtfeld="t4.txt=", msg=str(temperature) + "%")
+            send_data(txt_field="t8.txt=", msg=str(pressure) + "hPa")
+            # Temperatur
+            send_data(txt_field="t6.txt=", msg=str(temperature))
 
 
-def send_data(txtfeld, msg):
-    ser = serial.Serial("/dev/serial0", 9600)  # Open port with baud rate
+# Sensordaten an das Display senden
+def send_data(txt_field, msg):
 
+    ser = serial.Serial("/dev/serial0", 9600)  # UART Port mit Baudrate von 9600 erstellen
     my_string = 'FF'
 
-    #ser.write(str.encode("t2.txt="))
-    ser.write(str.encode(txtfeld))
+    ser.write(str.encode(txt_field))
     ser.write(str.encode("\""))
-    #ser.write(str.encode("50%"))
     ser.write(str.encode(msg))
     ser.write(str.encode("\""))
     ser.write(unhexlify(my_string))
     ser.write(unhexlify(my_string))
     ser.write(unhexlify(my_string))
 
+# Display Status setzen (aktiv/inaktiv)
 def display_Interrupt(Channel):
 
     global state

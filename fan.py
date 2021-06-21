@@ -21,20 +21,22 @@
 import RPi.GPIO as GPIO
 
 #GPIO Pin
-pin = 12
+fan_pin = 12    # Pin der Luefter
 
+# Luefter initialisieren
 def config():
-    gp.setwarnings(False)
-    gp.setmode(gp.BCM)
-    gp.setup(pin, gp.OUT)
-    gp.output(pin, gp.LOW)
+    GPIO.setmode(GPIO.BCM)               # GPIO Pin-Nummern ansprechen
+    GPIO.setwarnings(False)
+
+    GPIO.setup(fan_pin, GPIO.OUT)        # Luefter als Ausgang festlegen
+    GPIO.output(fan_pin, GPIO.LOW)       # Initialzustand == Inaktiv
 
 
 # Funktion zum anschalten der Luefter
 def switch_on():
-    gp.output(pin, gp.HIGH)
+    GPIO.output(fan_pin, GPIO.HIGH)
 
 
 # Funktion zum ausschalten der Luefter
 def switch_off():
-    gp.output(pin, gp.LOW)
+    GPIO.output(fan_pin, GPIO.LOW)

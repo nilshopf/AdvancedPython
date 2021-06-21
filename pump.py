@@ -22,22 +22,21 @@
 import RPi.GPIO as GPIO
 
 # GPIO Pin
-pumpe = 6
+pump_pin = 6    # Pin von der Pumpe
 
 
 # Pumpe initialisieren
 def config():
-    GPIO.setmode(GPIO.BCM)  # GPIO Nummern ansprechen
+    GPIO.setmode(GPIO.BCM)          # GPIO Pin-Nummern ansprechen
     GPIO.setwarnings(False)
 
-    # Pumpe initialisieren
-    GPIO.setup(pumpe, GPIO.OUT)
-    switch_off()
+    GPIO.setup(pump_pin, GPIO.OUT)  # Pumpe als Ausgang festlegen
+    switch_off()                    # initaialzustand == Deaktiv
 
 
 def switch_on():
-    GPIO.output(pumpe, GPIO.HIGH)
+    GPIO.output(pump_pin, GPIO.HIGH)
 
 
 def switch_off():
-    GPIO.output(pumpe, GPIO.LOW)
+    GPIO.output(pump_pin, GPIO.LOW)
