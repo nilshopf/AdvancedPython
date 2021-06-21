@@ -83,7 +83,7 @@ if __name__ == '__main__':
     fan.config()
     gpio.config()
     pump.config()
-    camera = camera.config()
+    camera.config()
     Display.config()
 
     while True:
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
         # stuendliche Fotoaufnahme
         if time.localtime()[4] % 60 == 0:
-            camera.picture(camera)
+            camera.picture()
             time.sleep(60)
 
         # Bodenfeuchtigkeit pruefen
