@@ -25,14 +25,18 @@ from pathlib import Path
 import os
 import shutil
 
+camera
+
 # Funktion zum einrichten der Kamera
 def config():
+    global camera
     camera = PiCamera()
-    return camera
+    
 
 # Funktion zum Aufnehmen und Abspeichern eines Bildes
-def picture(camera):
+def picture():
 
+    global camera
     # Ermitteln des aktuellen Datums und der Uhrzeit
     a = datetime.now()
     time = str(a.hour)+":"+str(a.minute)+":"+str(a.second)
