@@ -25,7 +25,7 @@ from pathlib import Path
 import os
 import shutil
 
-camera
+camera = 0
 
 # Funktion zum einrichten der Kamera
 def config():
