@@ -27,13 +27,12 @@ import threading
 
 # Importieren eigener Module
 import GPIO
-import servo
 import fan
 import rgb
 import pump
 import bme680
 import pcf8591
-import kamera
+import camera
 import Display
 
 # Startwerte fuer die Sensordaten
@@ -48,8 +47,9 @@ temperature_check = 26      # Vergleichswert Temperatur in °C
 humidity_check = 80         # Vergleichswert Luftfeuchtigkeit in %
 irrigation_time = 10        # Bewaesserungs Zeit in sek
 
-ventilation_check = 0
+ventilation_check = 0       # wird benoetigt, um den Luefter manuell zu steuern
 
+"""------------------------------WEBSITE & THREADS-----------------------------------"""
 
 # Befehle fuer Flask Webserver
 app = Flask(__name__)
@@ -82,7 +82,7 @@ if __name__ == '__main__':
     fan.config()
     GPIO.config()
     pump.config()
-    camera = kamera.config()
+    camera = camera.config()
     Display.config()
 
     while True:
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 
         # stuendliche Fotoaufnahme
         if time.localtime()[4] % 60 == 0:
-            kamera.picture(camera)
+            camera.picture(camera)
             time.sleep(60)
 
         # Bodenfeuchtigkeit pruefen

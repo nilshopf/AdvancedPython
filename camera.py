@@ -74,5 +74,3 @@ def picture(camera):
         newname = '/home/pi/Desktop/AdvancedPython/static/latest.jpg'
         os.rename(dst, newname)
         camera.stop_preview()
-
-    return date, time
