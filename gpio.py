@@ -39,6 +39,6 @@ def config():
 def camera_Interrupt(Channel):
 
     # Foto vom Gewaechshaus aufnehmen
-    camera.picture(camera)
+    #camera.picture(camera)
 
     # print("Foto Aufgenommen!!")
