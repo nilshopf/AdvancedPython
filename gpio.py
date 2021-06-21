@@ -41,4 +41,4 @@ def camera_Interrupt(Channel):
     # Foto vom Gewaechshaus aufnehmen
     #camera.picture(camera)
 
-    # print("Foto Aufgenommen!!")
+    print("Foto Aufgenommen!!")
